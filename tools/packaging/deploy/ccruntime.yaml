@@ -48,9 +48,9 @@ spec:
           path: /usr/local/bin/
           type: ""
         name: local-bin
-    installCmd: ["/opt/enclave-cc-artifacts/scripts/ecc-deploy.sh", "install"]
-    uninstallCmd: ["/opt/enclave-cc-artifacts/scripts/ecc-deploy.sh", "cleanup"]
-    cleanupCmd: ["/opt/enclave-cc-artifacts/scripts/ecc-deploy.sh", "reset"]
+    installCmd: ["/opt/enclave-cc-artifacts/scripts/enclave-cc-deploy.sh", "install"]
+    uninstallCmd: ["/opt/enclave-cc-artifacts/scripts/enclave-cc-deploy.sh", "cleanup"]
+    cleanupCmd: ["/opt/enclave-cc-artifacts/scripts/enclave-cc-deploy.sh", "reset"]
     # Uncomment and add the required RuntimeClassNames to be created
     runtimeClassNames: ["rune"]
     postUninstall:
