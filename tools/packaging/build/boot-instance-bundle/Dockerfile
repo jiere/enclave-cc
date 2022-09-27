@@ -57,7 +57,7 @@ RUN export PATH="$PATH:/opt/occlum/build/bin" && \
     mv Occlum.json Occlum.json.orig && \
     jq -a -f ../jq.filter Occlum.json.orig > Occlum.json && \
     occlum build && \
-    occlum package --debug
+    occlum package
 
 # TODO: we run occlum package to get a "clean" instance copied to a target
 # directory. The optimization here could be that we just use the occlum_instance
@@ -66,6 +66,6 @@ WORKDIR /run/rune
 RUN tar xzf /run/occlum/boot_instance/boot_instance.tar.gz && \
     rm -rf /run/occlum
 
-RUN apt-get remove -y wget gnupg make tzdata jq occlum binutils libfuse2 libfuse3-3 rsync && apt-get autoremove -y
+RUN apt-get remove -y wget gnupg make tzdata jq occlum occlum-toolchains-glibc binutils libfuse2 libfuse3-3 rsync && apt-get autoremove -y
 
 ENTRYPOINT ["/bin/init"]

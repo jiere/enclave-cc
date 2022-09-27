@@ -18,7 +18,6 @@ if [ ! -d "$bootContainerPath" ]; then
 fi
 
 pushd $bootContainerPath
-cp ${SCRIPT_ROOT}/boot-instance-bundle/config.json .
 rm -rf rootfs && mkdir rootfs
 docker export $(docker create $1) | sudo tar -C rootfs -xvf -
 

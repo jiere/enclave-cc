@@ -1,24 +1,28 @@
 apiVersion: confidentialcontainers.org/v1beta1
 kind: CcRuntime
 metadata:
-  name: ccruntime-sample
+  name: ccruntime-enclave-cc
   namespace: confidential-containers-system
 spec:
   # Add fields here
-  runtimeName: rune
+  runtimeName: enclave-cc
   ccNodeSelector:
     matchLabels:
       node-role.kubernetes.io/worker: ""
   config:
     installType: bundle
-    payloadImage: quay.io/renj1/runtime-payload:enclave-cc
+    payloadImage: quay.io/confidential-containers/runtime-payload:enclave-cc
     installDoneLabel:
       confidentialcontainers.org/enclave-cc: "true"
     uninstallDoneLabel:
       confidentialcontainers.org/enclave-cc: "cleanup"
     installerVolumeMounts:
+      - mountPath: /etc/kubernetes/
+        name: kubernetes-conf
       - mountPath: /etc/containerd/
         name: containerd-conf
+      - mountPath: /etc/enclave-cc/
+        name: enclave-cc-conf
       - mountPath: /opt/enclave-cc/
         name: enclave-cc-artifacts
       - mountPath: /var/run/dbus
@@ -29,9 +33,17 @@ spec:
         name: local-bin
     installerVolumes:
       - hostPath:
+          path: /etc/kubernetes/
+          type: ""
+        name: kubernetes-conf
+      - hostPath:
           path: /etc/containerd/
           type: ""
         name: containerd-conf
+      - hostPath:
+          path: /etc/enclave-cc/
+          type: DirectoryOrCreate
+        name: enclave-cc-conf
       - hostPath:
           path: /opt/enclave-cc/
           type: DirectoryOrCreate

@@ -66,6 +66,26 @@
                         "source": "proc"
                 },
                 {
+                        "destination": "/etc/resolv.conf",
+                        "type": "bind",
+                        "source": "/etc/resolv.conf",
+                        "options": [
+                                "rbind",
+                                "rprivate",
+                                "ro"
+                        ]
+                },
+                {
+                        "destination": "/etc/hostname",
+                        "type": "bind",
+                        "source": "/etc/hostname",
+                        "options": [
+                                "rbind",
+                                "rprivate",
+                                "ro"
+                        ]
+                },
+                {
                         "destination": "/dev",
                         "type": "tmpfs",
                         "source": "tmpfs",

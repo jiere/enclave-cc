@@ -49,6 +49,7 @@ function get_container_runtime() {
 function install_artifacts() {
 	echo "copying enclave-cc artifacts onto host"
 	cp -a /opt/enclave-cc-artifacts/* /opt/enclave-cc/
+	mv /opt/enclave-cc/shim-rune-config.toml /etc/enclave-cc/config.toml
 	install -d $install_path
 	install -D -m0755 /opt/enclave-cc/${shim_rune_binary} $install_path
 	echo "deb [arch=amd64 signed-by=/usr/share/keyrings/occlum.gpg] http://mirrors.openanolis.cn/inclavare-containers/ubuntu20.04 focal main" | tee -a /etc/apt/sources.list.d/occlum.list
@@ -88,7 +89,7 @@ function configure_containerd_runtime() {
 	if grep -q "version = 2\>" $containerd_conf_file; then
 		pluginid=\"io.containerd.grpc.v1.cri\"
 	fi
-	local runtime_table="plugins.${pluginid}.containerd.runtimes.$runtime"
+	local runtime_table="plugins.${pluginid}.containerd.runtimes.enclave-cc"
 	local runtime_type="io.containerd.$runtime.v2"
 	if grep -q "\[$runtime_table\]" $containerd_conf_file; then
 		echo "Configuration exists for $runtime_table, overwriting"
