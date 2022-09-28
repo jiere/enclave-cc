@@ -8,19 +8,19 @@ exit 1
 fi
 
 #if image $1 exist, romove it.
-docker rmi $1 -f
+sudo docker rmi $1 -f
 
 docker build . -t $1
 
 bootContainerPath="${PAYLOAD_ARTIFACTS}/boot-instance"
 if [ ! -d "$bootContainerPath" ]; then
-    mkdir -p $bootContainerPath
+    sudo mkdir -p $bootContainerPath
 fi
 
 pushd $bootContainerPath
-rm -rf rootfs && mkdir rootfs
-docker export $(docker create $1) | sudo tar -C rootfs -xvf -
+sudo rm -rf rootfs && sudo mkdir rootfs
+sudo docker export $(docker create $1) | sudo tar -C rootfs -xvf -
 
-mkdir -p rootfs/sefs/lower
-mkdir -p rootfs/sefs/upper
+sudo mkdir -p rootfs/sefs/lower
+sudo mkdir -p rootfs/sefs/upper
 popd
