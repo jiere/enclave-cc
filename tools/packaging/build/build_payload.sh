@@ -29,13 +29,13 @@ popd
 
 # rune binary will be installed directly through "apt install" inside the docker build.
 
-cp ${SCRIPT_ROOT}/../deploy/enclave-cc-deploy.sh ${PAYLOAD_ARTIFACTS}/scripts
+sudo cp ${SCRIPT_ROOT}/../deploy/enclave-cc-deploy.sh ${PAYLOAD_ARTIFACTS}/scripts
 
 # prepare payload artifacts static tarball
 pushd $PAYLOAD_ARTIFACTS
 sudo tar cfJ enclave-cc-static.tar.xz *
 sudo cp ${SCRIPT_ROOT}/Dockerfile .
-docker build . -t $1
+sudo docker build . -t $1
 popd
 
 #cleanup

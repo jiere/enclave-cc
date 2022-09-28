@@ -56,6 +56,7 @@ function install_artifacts() {
 	wget -qO - http://mirrors.openanolis.cn/inclavare-containers/ubuntu20.04/DEB-GPG-KEY.key | gpg --dearmor --output /usr/share/keyrings/occlum.gpg
 	apt update
 	env DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends occlum-runtime occlum-toolchains-glibc occlum rune
+	export KUBECONFIG=/etc/kubernetes/admin.conf
 }
 
 function configure_cri_runtime() {
