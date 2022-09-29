@@ -52,11 +52,6 @@ function install_artifacts() {
 	mv /opt/enclave-cc/shim-rune-config.toml /etc/enclave-cc/config.toml
 	install -d $install_path
 	install -D -m0755 /opt/enclave-cc/${shim_rune_binary} $install_path
-	echo "deb [arch=amd64 signed-by=/usr/share/keyrings/occlum.gpg] http://mirrors.openanolis.cn/inclavare-containers/ubuntu20.04 focal main" | tee -a /etc/apt/sources.list.d/occlum.list
-	wget -qO - http://mirrors.openanolis.cn/inclavare-containers/ubuntu20.04/DEB-GPG-KEY.key | gpg --dearmor --output /usr/share/keyrings/occlum.gpg
-	apt update
-	env DEBIAN_FRONTEND=noninteractive apt install -y --no-install-recommends occlum-runtime occlum-toolchains-glibc occlum rune
-	export KUBECONFIG=/etc/kubernetes/admin.conf
 }
 
 function configure_cri_runtime() {
@@ -136,6 +131,7 @@ function main() {
 	if [[ $euid -ne 0 ]]; then
 	   die  "This script must be run as root"
 	fi
+	export KUBECONFIG=/etc/kubernetes/admin.conf
 
 	runtime=$(get_container_runtime)
 	if [ "$runtime" != "containerd" ]; then
