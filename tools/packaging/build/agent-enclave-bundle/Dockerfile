@@ -28,8 +28,8 @@ RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/intel-sgx.gpg] https://d
     libsgx-dcap-quote-verify \
     libsgx-dcap-default-qpl
 
-RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/occlum.gpg] http://mirrors.openanolis.cn/inclavare-containers/ubuntu20.04 focal main" | tee -a /etc/apt/sources.list.d/occlum.list \
- && wget -qO - http://mirrors.openanolis.cn/inclavare-containers/ubuntu20.04/DEB-GPG-KEY.key | gpg --dearmor --output /usr/share/keyrings/occlum.gpg \
+RUN echo "deb [arch=amd64 signed-by=/usr/share/keyrings/occlum.gpg] https://occlum.io/occlum-package-repos/debian focal main" | tee -a /etc/apt/sources.list.d/occlum.list \
+ && wget -qO - https://occlum.io/occlum-package-repos/debian/public.key | gpg --dearmor --output /usr/share/keyrings/occlum.gpg \
  && apt-get update
 RUN env DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     jq \
@@ -66,5 +66,7 @@ RUN tar xzf /run/enclave-agent/occlum_instance/occlum_instance.tar.gz && \
     rm -rf /run/enclave-agent
 
 RUN apt-get remove -y wget gnupg tzdata jq occlum make binutils libfuse2 libfuse3-3 ca-certificates rsync && apt-get autoremove -y
+RUN echo "/run/rune/occlum_instance/build/lib/" | tee /etc/ld.so.conf.d/occlum-pal.conf && \
+    ldconfig
 
 ENTRYPOINT ["/bin/enclave-agent"]

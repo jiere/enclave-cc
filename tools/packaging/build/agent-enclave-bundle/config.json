@@ -10,12 +10,11 @@
                         "/run/rune/occlum_instance/build/bin/occlum-run",
                         "/bin/enclave-agent",
                         "-l",
-                        "tcp://0.0.0.0:7788"
+                        "tcp://127.0.0.1:7788"
                 ],
                 "env": [
                         "OCCLUM_RELEASE_ENCLAVE=1",
                         "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
-                        "LD_LIBRARY_PATH=/run/rune/occlum_instance//build/lib:/usr/lib64:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
                         "TERM=xterm"
                 ],
                 "cwd": "/run/rune/occlum_instance",
